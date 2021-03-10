@@ -1,4 +1,6 @@
+@import '../../style/default.less';
 .header {
+    background: @white;
     .header-top {
         height: 60px;
         line-height: 60px;
@@ -14,7 +16,19 @@
         padding: 0 20px;
         border-top: 1px solid #f9c700;
         .breadcrumb-title {
+            position: relative;
+            font-size: 18px;
             text-align: center;
+            &::after {
+                content: '';
+                position: absolute;
+                left: 50%;
+                top: 40px;
+                border-top: 9px solid @white;
+                border-left: 12px solid transparent;
+                border-right: 12px solid transparent;
+                transform: translate(-50%, 0);
+            }
         }
         .wheather {
             text-align: right;

@@ -3,7 +3,8 @@ import React from 'react'
 import './index.less'
 import Util from '../../utils/utils'
 import axios from '../../axios'
-export default class Header extends React.Component {
+import { connect } from 'react-redux'
+class Header extends React.Component {
     state = {}
     componentWillMount() {
         this.setState({
@@ -48,7 +49,7 @@ export default class Header extends React.Component {
                     </Col>
                 </Row>
                 <Row className="breadcrumb">
-                    <Col span="4" className="breadcrumb-title">首页</Col>
+                    <Col span="4" className="breadcrumb-title">{this.props.menuName}</Col>
                     <Col span="20" className="wheather">
                         <span className="date">{this.state.sysTime}</span>
                         <span className="wheather-detail">
@@ -60,3 +61,10 @@ export default class Header extends React.Component {
         )
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        menuName: state.menuName
+    }
+}
+export default connect(mapStateToProps)(Header)

@@ -2,12 +2,19 @@ import { Menu } from 'antd'
 import React from 'react'
 import { NavLink } from 'react-router-dom';
 import MenuConfig from '../../config/menuConfig'
+import { connect } from 'react-redux';
+import { switchMenu } from './../../redux/actions'
 const SubMenu = Menu.SubMenu;
 
-export default class NavLeft extends React.Component {
+class NavLeft extends React.Component {
+    state = {
+        currentKey: ''
+    }
     componentWillMount() {
         const menuTreeNode = this.renderMenu(MenuConfig);
+        let currentKey = window.location.hash.replace(/#|\?.*$/g, '');
         this.setState({
+            currentKey,
             menuTreeNode
         })
     }
@@ -22,12 +29,20 @@ export default class NavLeft extends React.Component {
                     </SubMenu>
                 )
             }
-            return <Menu.Item key={item.key}>
+            return <Menu.Item title={item.title} key={item.key}>
                 <NavLink to={item.key}>
                 {item.title}
                 </NavLink>
             </Menu.Item>
         })
+    }
+
+    handleClick = (item) => {
+        const { dispatch } = this.props;
+        dispatch(switchMenu(item.item.props.title))
+        this.setState({
+            currentKey: item.key
+        });
     }
     
     render() {
@@ -37,10 +52,12 @@ export default class NavLeft extends React.Component {
                     <img />
                     <h1>AZ bike</h1>
                 </div>
-                <Menu theme="dark">
+                <Menu onClick={this.handleClick} selectedKeys={this.state.currentKey} theme="dark">
                     {this.state.menuTreeNode}
                 </Menu>
             </div>
         )
     }
 }
+
+export default connect()(NavLeft);

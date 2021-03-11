@@ -5,6 +5,7 @@ import Login from './pages/login'
 import Admin from './admin'
 import Buttons from './pages/ui/buttons'
 import NoMatch from './pages/nomatch';
+import Home from './pages/home';
 
 export default class IRouter extends React.Component {
 
@@ -12,16 +13,19 @@ export default class IRouter extends React.Component {
         return (
             <Router>
                 <App>
-                    <Route path ='/login' component={Login}></Route>
-                    <Route path="/admin" render={() => 
-                        <Admin>
-                            <Switch>
-                                <Route path="/admin/ui/button" component={Buttons}></Route>
-                                <Route component={NoMatch}></Route>
-                            </Switch>
-                        </Admin>
-                    }></Route>
-                    <Route path="/order/detail" component={Login}></Route>
+                    <Switch>
+                        <Route path ='/login' component={Login}></Route>
+                        <Route path="/order/detail" component={Login}></Route>
+                        <Route path="/" render={() => 
+                            <Admin>
+                                <Switch>
+                                    <Route path="/home" component={Home}></Route>
+                                    <Route path="/ui/button" component={Buttons}></Route>
+                                    <Route component={NoMatch}></Route>
+                                </Switch>
+                            </Admin>
+                        }></Route>
+                    </Switch>
                 </App>
             </Router>
         )
